@@ -1,9 +1,9 @@
 using Literate: Literate
-using EDTwists
+using TwistedBoundaryConditions
 
 Literate.markdown(
-    joinpath(pkgdir(EDTwists), "docs", "files", "README.jl"),
-    joinpath(pkgdir(EDTwists), "docs", "src");
+    joinpath(pkgdir(TwistedBoundaryConditions), "docs", "files", "README.jl"),
+    joinpath(pkgdir(TwistedBoundaryConditions), "docs", "src");
     flavor = Literate.DocumenterFlavor(),
     name = "index",
 )

@@ -1,5 +1,5 @@
 using BenchmarkTools
-using EDTwists
+using TwistedBoundaryConditions
 
 SUITE = BenchmarkGroup()
 SUITE["rand"] = @benchmarkable rand(10)

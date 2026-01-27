@@ -1,8 +1,8 @@
-using EDTwists
+using TwistedBoundaryConditions
 using Aqua: Aqua
 using Test
 using TestExtras
 
 @testset "Code quality (Aqua.jl)" begin
-    Aqua.test_all(EDTwists)
+    Aqua.test_all(TwistedBoundaryConditions)
 end

@@ -1,3 +1,3 @@
-using EDTwists
+using TwistedBoundaryConditions
 using Test
 using TestExtras

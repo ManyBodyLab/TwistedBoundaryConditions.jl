@@ -1,7 +1,7 @@
-using EDTwists
+using TwistedBoundaryConditions
 using Test
 using TestExtras
 
-@testset "EDTwists" begin
+@testset "TwistedBoundaryConditions" begin
     # Tests go here.
 end

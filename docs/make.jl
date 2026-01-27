@@ -1,8 +1,8 @@
-using EDTwists
+using TwistedBoundaryConditions
 using Documenter: Documenter, DocMeta, deploydocs, makedocs
 
 DocMeta.setdocmeta!(
-    EDTwists, :DocTestSetup, :(using EDTwists); recursive = true
+    TwistedBoundaryConditions, :DocTestSetup, :(using TwistedBoundaryConditions); recursive = true
 )
 
 # Copy the license file into docs/src
@@ -12,11 +12,11 @@ cp(joinpath(@__DIR__, "..", "LICENSE"), joinpath(@__DIR__, "src", "LICENSE"); fo
 include("make_index.jl")
 
 makedocs(;
-    modules = [EDTwists],
+    modules = [TwistedBoundaryConditions],
     authors = "Andreas Feuerpfeil <development@manybodylab.com>",
-    sitename = "EDTwists.jl",
+    sitename = "TwistedBoundaryConditions.jl",
     format = Documenter.HTML(;
-        canonical = "https://manybodylab.github.io/EDTwists.jl",
+        canonical = "https://manybodylab.github.io/TwistedBoundaryConditions.jl",
         edit_link = "main",
         assets = [#"assets/logo.png", 
             "assets/extras.css"],
@@ -25,5 +25,5 @@ makedocs(;
 )
 
 deploydocs(;
-    repo = "github.com/ManyBodyLab/EDTwists.jl", devbranch = "main", push_preview = true
+    repo = "github.com/ManyBodyLab/TwistedBoundaryConditions.jl", devbranch = "main", push_preview = true
 )
