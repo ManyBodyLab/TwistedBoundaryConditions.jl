@@ -1,0 +1,5 @@
+[deps]
+EDTwists = "2af597a4-5342-44f0-9c3f-26623f0804b1"
+
+[compat]
+EDTwists = "0.1"

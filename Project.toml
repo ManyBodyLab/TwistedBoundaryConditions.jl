@@ -1,0 +1,7 @@
+name = "EDTwists"
+uuid = "2af597a4-5342-44f0-9c3f-26623f0804b1"
+authors = ["Andreas Feuerpfeil <development@manybodylab.com>"]
+version = "0.1.0"
+
+[compat]
+julia = "1.10"
