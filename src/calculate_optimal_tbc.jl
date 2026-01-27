@@ -97,7 +97,7 @@ function generate_unimodular_matrices(dim::Int, limit::Int)
 end
 
 """
-    calculate_optimal_tbc(Ns::Int, basis_vectors::Vector{Vector{T}}; search_range::Int=3) where {T<:Real}
+    calculate_optimal_tbc(Ns::Int, basis_vectors::AbstractVector{<:AbstractVector{T}}; search_range::Int=3) where {T<:Real}
 
 Generalized optimal TBC calculator for arbitrary dimension D.
 
