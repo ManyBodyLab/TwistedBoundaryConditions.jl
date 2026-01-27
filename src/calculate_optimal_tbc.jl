@@ -7,7 +7,7 @@ using Combinatorics
 Performs LLL lattice reduction to find a basis with short, nearly orthogonal vectors.
 Essential for defining a meaningful aspect ratio in D > 2.
 """
-function lll_reduction(basis::Vector{Vector{T}}; delta=0.75) where {T<:Real}
+function lll_reduction(basis::AbstractVector{<:AbstractVector{T}}; delta=0.75) where {T<:Real}
     n = length(basis)
     b = copy(basis)
     # Gram-Schmidt orthogonalization vectors (mu and B)
@@ -15,8 +15,8 @@ function lll_reduction(basis::Vector{Vector{T}}; delta=0.75) where {T<:Real}
     
     function update_gram_schmidt(b)
         q = [copy(vec) for vec in b]
-        mu = Matrix{Float64}(I, n, n)
-        B = zeros(Float64, n)
+        mu = Matrix{T}(I, n, n)
+        B = zeros(T, n)
         for i in 1:n
             for j in 1:i-1
                 mu[i, j] = dot(b[i], q[j]) / dot(q[j], q[j])
@@ -106,7 +106,7 @@ Generalized optimal TBC calculator for arbitrary dimension D.
 - `basis_vectors`: List of D basis vectors (e.g., [[1.0, 0.0], [-0.5, 0.866]]).
 - `search_range`: Range for integers in the twist matrix.
 """
-function calculate_optimal_tbc(Ns::Int, basis_vectors::Vector{Vector{T}}; search_range::Int=3) where {T<:Real}
+function calculate_optimal_tbc(Ns::Int, basis_vectors::AbstractVector{<:AbstractVector{T}}; search_range::Int=3) where {T<:Real}
     dim = length(basis_vectors)
     if length(basis_vectors[1]) != dim
         error("Dimension of basis vectors must match number of vectors.")
