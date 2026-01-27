@@ -2,7 +2,7 @@ using LinearAlgebra
 using Combinatorics
 
 """
-    lll_reduction(basis::Vector{Vector{T}}; delta=0.75) where {T<:Real}
+    lll_reduction(basis::AbstractVector{AbstractVector{T}}; delta=0.75) where {T<:Real}
 
 Performs LLL lattice reduction to find a basis with short, nearly orthogonal vectors.
 Essential for defining a meaningful aspect ratio in D > 2.
