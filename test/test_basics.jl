@@ -49,12 +49,12 @@ using LinearAlgebra
             b2 = [1.0, 0.0]; b1 = [-0.5, sqrt(3)/2]
             N21_1, U21_1, ratio21_1 = calculate_optimal_tbc(21, [b1, b2]; search_range=1)
             @test N21_1 == [3, 7]
-            @test U21_1 == Matrix{Int}([0 -1; 1 -1])
+            @test U21_1 == Matrix{Int}([1 0; -1 1])
             @test isapprox(ratio21_1, 0.6735753140545634; atol=1e-12)
 
             N21_2, U21_2, ratio21_2 = calculate_optimal_tbc(21, [b1, b2]; search_range=2)
             @test N21_2 == [3, 7]
-            @test U21_2 == Matrix{Int}([1 -2; 1 -1])
+            @test U21_2 == Matrix{Int}([2 -1; -1 1])
             @test isapprox(ratio21_2, 0.9571859726038531; atol=1e-12)
         end
 
@@ -62,7 +62,7 @@ using LinearAlgebra
             b1 = [1.0, 0.0, 0.0]; b2 = [0.0, 1.0, 0.0]; b3 = [0.0, 0.0, 1.0]
             N12, U12, ratio12 = calculate_optimal_tbc(12, [b1, b2, b3]; search_range=1)
             @test N12 == [1, 3, 4]
-            @test U12 == Matrix{Int}([0 -1 -1; -1 0 -1; 1 -1 -1])
+            @test U12 == Matrix{Int}([1 0 0; -1 1 0; -1 -1 1])
             @test isapprox(ratio12, 0.8164965809277259; atol=1e-12)
         end
 
