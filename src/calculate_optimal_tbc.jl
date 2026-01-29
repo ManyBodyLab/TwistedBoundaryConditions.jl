@@ -97,7 +97,7 @@ function generate_unimodular_matrices(dim::Int, limit::Int)
 end
 
 """
-    calculate_optimal_tbc(Ns::Int, basis_vectors::AbstractVector{<:AbstractVector{T}}; search_range::Int=3) where {T<:Real}
+    calculate_optimal_tbc(Ns::Int, basis_vectors::AbstractVector{<:AbstractVector{T}}; search_range::Int=3, identity_weight::Float64=1e-4) where {T<:Real}
 
 Generalized optimal TBC calculator for arbitrary dimension D.
 
@@ -106,7 +106,10 @@ Generalized optimal TBC calculator for arbitrary dimension D.
 - `basis_vectors`: List of D basis vectors (e.g., [[1.0, 0.0], [-0.5, 0.866]]).
 - `search_range`: Range for integers in the twist matrix.
 """
-function calculate_optimal_tbc(Ns::Int, basis_vectors::AbstractVector{<:AbstractVector{T}}; search_range::Int=3) where {T<:Real}
+function calculate_optimal_tbc(Ns::Int, basis_vectors::AbstractVector{<:AbstractVector{T}}; 
+        search_range::Int=3,
+        identity_weight::Float64=1e-4
+    ) where {T<:Real}
     dim = length(basis_vectors)
     if length(basis_vectors[1]) != dim
         error("Dimension of basis vectors must match number of vectors.")
@@ -150,16 +153,17 @@ function calculate_optimal_tbc(Ns::Int, basis_vectors::AbstractVector{<:Abstract
             # Extract vectors from R_matrix columns
             R_vecs = [R_matrix[:, i] for i in 1:dim]
 
-            # 3. Lattice Reduction (LLL)
-            reduced_R = lll_reduction(R_vecs)
+            # 3. Calculate ratio 
+            ratio = calculate_ratio(R_vecs)
 
-            # 4. Calculate Aspect Ratio
-            # Generalized Metric: Volume / (Max_Length)^D
-            vol = abs(det(hcat(reduced_R...)))
-            max_len = maximum(norm.(reduced_R))
-            ratio = vol / (max_len^dim)
+            # 4. Penalize lattices far from original basis vectors 
+            if haskey(best_config, "U_matrix")
+                diff = norm(U - I) - norm(best_config["U_matrix"] - I)
+            else
+                diff = 0.0
+            end
 
-            if ratio > best_ratio
+            if ratio > best_ratio + diff * identity_weight
                 best_ratio = ratio
                 best_config = Dict(
                     "N_dims" => N_dims,
@@ -170,4 +174,17 @@ function calculate_optimal_tbc(Ns::Int, basis_vectors::AbstractVector{<:Abstract
         end
     end
     return best_config["N_dims"], best_config["U_matrix"], best_config["Aspect_Ratio"]
+end
+
+function calculate_ratio(R_vecs)
+    # 1. Lattice Reduction (LLL)
+    reduced_R = lll_reduction(R_vecs)
+
+    # 2. Calculate Aspect Ratio
+    # Generalized Metric: Volume / (Max_Length)^D
+    vol = abs(det(hcat(reduced_R...)))
+    max_len = maximum(norm.(reduced_R))
+    dim = length(R_vecs)
+    ratio = vol / (max_len^dim)
+    return ratio 
 end
